@@ -19,7 +19,12 @@
         "browser": true,
         "jest": true
     },
-    "rules": {
+    "rules": {  
+			"prettier/prettier": ["error",{
+      	"endOfLine": "auto"}
+    		],   
+				"react/no-unescaped-entities": "off",
+				"@next/next/no-page-custom-font": "off",
         "import/prefer-default-export": "off",
         "react/prop-types": "off",
         "import/no-cycle": "off",

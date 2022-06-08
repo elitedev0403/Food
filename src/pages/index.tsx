@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { NextPage } from 'next'
 import Heading from '@src/components/heading/heading'
 import Grid from '@src/components/grid/grid'
@@ -10,52 +10,39 @@ import Card, { CardProps } from '@src/components/card/card'
 import Highlight from '@src/components/highlight/highlight'
 import Layout from '@src/components/layout/layout'
 import Modal from '@src/components/image-modal/image-modal'
+import ImageButton from '@src/components/image-button/image-button'
 
 const Home: NextPage = () => {
+  const [showModal, setShowModal] = useState(false)
+  const [imageUrl, setImageUrl] = useState('')
+  const [cardInfo, setCardInfo] = useState<CardProps[]>([])
+  const [isLoading, setLoading] = useState(false)
 
-	const [showModal, setShowModal] = React.useState(false);
-	const [imageUrl, setImageUrl] = React.useState("");
+  useEffect(() => {
+    setLoading(true)
 
-  const cardInfo: CardProps[] = [
-    {
-      imgUrl: '/assets/images/card1.jpg',
-      title: 'Summer Lunch Menu By Mark Best',
-      content:
-        'AEG ambassador Mark Best’s summer eats are guaranteed to help you make the most of the warmer weather and entertaining at home.',
-    },
-    {
-      imgUrl: '/assets/images/card2.jpg',
-      title: 'A Traditional Christmas Eve, Mark Best Style',
-      content:
-        "One of Australia's best chefs and AEG ambassador, Mark Best, shares his favourite Christmas Eve menu which is sure to impress your guests.",
-    },
-    {
-      imgUrl: '/assets/images/card3.jpg',
-      title: 'Summer Lunch Menu By Mark Best',
-      content:
-        'This exclusive cookbook gives you all the know‑how you need. We’ve designed it to make sure you get the most out of our products – and the best out of your food.',
-    },
-  ];
+    fetch('/data/blogs.json')
+      .then((res) => res.json())
+      .then((data) => {
+        setCardInfo(data)
+        setLoading(false)
+      })
+  }, [])
 
-	const setModal = (url: string) => {
-		setImageUrl(url);
-		setShowModal(true);
-	}
+  const setModal = (url: string) => {
+    setImageUrl(url)
+    setShowModal(true)
+  }
 
-	const imageLink = (url: string) => (
-		<>
-			<img src={url} className="cursor-pointer transition duration-300 hover:scale-95 hover:blur-sm w-full" alt=""  onClick={ () => setModal(url) }/>
-		</>
-	)
 
   return (
-    <Layout>
+    <Layout loading={isLoading}>
       <Grid>
-        {imageLink("/assets/images/blog1.jpg")}
+				<ImageButton imageUrl="/assets/images/blog1.jpg" onClick={(url) => setModal(url)}/>
 
         <Stack>
-        	{imageLink("/assets/images/blog2.jpg")}
-        	{imageLink("/assets/images/blog3.jpg")}
+					<ImageButton imageUrl="/assets/images/blog2.jpg" onClick={(url) => setModal(url)}/>
+					<ImageButton imageUrl="/assets/images/blog3.jpg" onClick={(url) => setModal(url)}/>
         </Stack>
 
         <div className="xl:col-span-1 sm:col-span-2 col-span-1">
@@ -84,7 +71,13 @@ const Home: NextPage = () => {
         ))}
       </Grid>
 
-			<Modal onClose={() => {setShowModal(false)}} show={showModal} imageUrl={imageUrl}></Modal>
+      <Modal
+        onClose={() => {
+          setShowModal(false)
+        }}
+        show={showModal}
+        imageUrl={imageUrl}
+      ></Modal>
     </Layout>
   )
 }
