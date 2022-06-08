@@ -1,102 +1,46 @@
-# tailwind-react-next.js-typescript-eslint-jest-starter
+## Technologies (tailwind-react-next.js-typescript-eslint)
 
-Starter template for building a project using React, Typescript, Next.js, Jest, TailwindCSS and ESLint.
+I used the latest technologies for this assignment. 
+- I used tailwind css and postcss works as a CSS-preprocessor. 
+- I coded high-level typescript code so that it can avoid type errors and has a great scalability and maintainabilty.
+- I used react and next.js to improve performance and make website SEO friendly. Next.JS handles all the production and build. I setup an optimized compiler swcrc and next.js handles the static content build.
 
-## Setup Instructions
+The reason I select these tech stack is these are the latest ones and it provides great performance and saves time. 
+For example regarding for tailwind css, it automatically preprocess all the css classes and css files and creates the final css.
 
-1. Clone or download the project.
-2. `cd` in the project directory.
-3. If you cloned the project, make sure you remove the remote reference to this project by running `git remote rm origin`.
-4. Copy `.env.example` to `.env` as that file is used to load up all your environment variables.
-4. Run `yarn install` or `npm install` to install all dependencies.
+Furthermore Next.JS provides three functionalities
+	- It comes with a built-in CSS support that allows developers to import CSS files from a JavaScript file.
+	- It also possesses a built-in Automatic Image Optimisation feature that automatically optimizes images by using the image component.
+	- It gives developers the liberty of updating existing pages by re-rendering them in the background alongside the incoming traffic.
+
+For maintainability I used blogs.json and save it in the public/data folder.
+So if you change the JSON content of blogs.json then it will directly affects to page.
+You may feel like fetching the json data from the server.
+
+## Better way
+
+After I had completed this task I checked my code and found a better solution.
+
+It would be great if I used styled component instead of tailwind css in this case.
+It would be great if I implemented unit testing with Jest(I've setup Jest environment and test commands on this project)
+**But this site is quite small and all the contents are static so we need very low level unit testing.**
+
+## Production
+
+I've pushed `production.rar` which was created by `yarn production` command.
+You can simply deploy it on anytypes of static server easily.
+
+## Git
+
+I created a public repository and pushed into that repository.
+I created multiple github commits.
+
 
 ## Commands
 
+These are commands that developers can use.
 - `yarn dev`: To start a local development server.
-- `yarn test`: To run the entire unit test suite using `jest`.
-- `yarn test:ci`: To run tests on CI.
-- `yarn lint`: To run the ESLint based linter to find out the issues in the project.
 - `yarn format`: To autoformat all the issues.
 - `yarn export`: Run this after running `yarn analyze` to export a build copy.
 - `yarn production`: To export a production build. Use `yarn start` to serve that.
-
 - `yarn upgrade --latest`: To upgrade all packages to their latest versions (could include breaking changes).
-
-## Code Structure
-
-All source code is located in the `src/` directory.
-
-1. All Next.js entrypoints are housed in the `src/pages` directory as a default.
-
-    - Currently has `_app.tsx` which imports TailwindCSS.
-    - There's also a sample `index.tsx`.
-
-    **NOTE:** Feel free to move `pages` outside of `src/` if that's what you prefer. You'll just need to restart your local development server and everything should continue working as normal.
-
-2. `src/components` are all stateless reusable components.
-3. `src/css` folder is there just to house any CSS.
-
-    - Currently contains the TailwindCSS initialization CSS file.
-
-4. All env variables are available in `.env` files (`.env` file isn't committed). Whenever you update `.env`, please update `.env.example` and `.env.test` and `next.config.js` to proxy all environment variables properly.
-
-    - You can access these variables in the app source code anywhere using `process.env.<VAR_NAME>`.
-
-If you feel like changing the directory structure, please change the appropriate settings in the following files:
-
-- `.swcrc`
-- `jest.config.js`
-- `postcss.config.js`
-- `tsconfig.json`
-- The `lint` and the `format` scripts in `package.json`
-
-## Note
-
-1. This project removes the `x-powered-by` response header via `next.config.js` by marking the `poweredByHeader` property as `false`.
-
-2. If you wish to use `Enzyme` instead of `React Testing Library`, please refer to [this commit](https://github.com/abhishekbhardwaj/tailwind-react-next.js-typescript-eslint-jest-starter/commit/58bde782bef1050cc91a20fccecb7c6e4a6216aa). Enzyme was removed with that commit.
-
-3. If you wish to use Babel instead of SWC (introduced with the Next.js v12 upgrade), please remove the `.swcrc` file and add a `.babelrc` file at the root with the following:
-
-```
-{
-    "presets": [
-        "next/babel"
-    ],
-    "plugins": [
-        [
-            "module-resolver",
-            {
-                "root": [
-                    "./"
-                ],
-                "alias": {
-                    "@src": "./src"
-                },
-                "extensions": [
-                    ".js",
-                    ".jsx",
-                    ".ts",
-                    ".tsx"
-                ]
-            }
-        ]
-    ]
-}
-```
-
-Then, open `./jest.config.js` and find the `globals` config. Add `babelConfig: true,` to it, like so:
-
-```diff
-{
-    globals: {
-        'ts-jest': {
-            tsconfig: '<rootDir>/tsconfig.jest.json',
-+           babelConfig: true,
-            diagnostics: false,
-        },
-    },
-}
-```
-
-Also, run `yarn add -D @babel/core babel-plugin-module-resolver eslint-import-resolver-babel-module` to install Babel's dependencies.
